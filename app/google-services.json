@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "392221469730",
+    "firebase_url": "https://faktanyus.firebaseio.com",
+    "project_id": "faktanyus",
+    "storage_bucket": "faktanyus.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392221469730:android:845b6a7aba3ce96f1fae7b",
+        "android_client_info": {
+          "package_name": "com.vanard.faktanyus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392221469730-dri4a3n51qijl8d6ppsau6usol8d3q8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vanard.faktanyus",
+            "certificate_hash": "f7c0de21d62f86bb67fe11219b931c194778d752"
+          }
+        },
+        {
+          "client_id": "392221469730-krc8hfmmm2s3o0v8bd6296043nslf1o6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBregDI-0iBGsjNOKvjC27QV8C1z8_z0nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392221469730-krc8hfmmm2s3o0v8bd6296043nslf1o6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
