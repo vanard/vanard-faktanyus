@@ -71,6 +71,8 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mViewModel = ViewModelProviders.of(this).get(EditProfileViewModel.class);
+        binding.setViewModel(mViewModel);
 
         ImagePickerActivity.clearCache(requireContext());
 
@@ -87,6 +89,7 @@ public class EditProfileFragment extends Fragment {
     private void setInitData() {
         binding.nameEditProfile.setText(user.getName());
         binding.emailEditProfile.setText(user.getEmail());
+
         mViewModel.fullname.setValue(user.getName());
 
         if (!user.getPhone().isEmpty()) {
@@ -195,8 +198,6 @@ public class EditProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(EditProfileViewModel.class);
-        binding.setViewModel(mViewModel);
 
         binding.backEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
