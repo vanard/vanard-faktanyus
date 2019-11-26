@@ -8,9 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -84,14 +87,109 @@ public class EditProfileFragment extends Fragment {
     private void setInitData() {
         binding.nameEditProfile.setText(user.getName());
         binding.emailEditProfile.setText(user.getEmail());
-        if (!user.getPhone().isEmpty())
+        mViewModel.fullname.setValue(user.getName());
+
+        if (!user.getPhone().isEmpty()) {
             binding.phoneEditProfile.setText(user.getPhone());
-        else
+            mViewModel.phone.setValue(user.getPhone());
+        }
+        else {
             binding.phoneEditProfile.setText("");
+            mViewModel.phone.setValue("");
+        }
 
-        if (!user.getProfilePicture().isEmpty())
+        if (!user.getProfilePicture().isEmpty()) {
             loadProfile(user.getProfilePicture());
+            mViewModel.profpic.setValue(user.getProfilePicture());
+        }
 
+
+        binding.emailEditProfile.setEnabled(false);
+
+        binding.phoneEditProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mViewModel.phone.setValue(s.toString().trim());
+            }
+        });
+
+        binding.nameEditProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mViewModel.fullname.setValue(s.toString().trim());
+            }
+        });
+
+        binding.oldpasswordEditProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mViewModel.oldPassword.setValue(s.toString().trim());
+            }
+        });
+
+        binding.newpasswordEditProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mViewModel.password.setValue(s.toString().trim());
+            }
+        });
+
+        binding.repasswordEditProfile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mViewModel.repassword.setValue(s.toString().trim());
+            }
+        });
     }
 
     @Override
@@ -99,8 +197,6 @@ public class EditProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(EditProfileViewModel.class);
         binding.setViewModel(mViewModel);
-
-        initData();
 
         binding.backEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +211,14 @@ public class EditProfileFragment extends Fragment {
                 checkPermission();
             }
         });
+
+        binding.editEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(requireContext(), "On Development", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void goToProfile() {
@@ -126,6 +230,15 @@ public class EditProfileFragment extends Fragment {
         final FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.profile_container, fragment).addToBackStack(null);
         ft.commit();
+    }
+
+    private void initData() {
+        mViewModel.fullname.setValue("");
+        mViewModel.username.setValue("");
+        mViewModel.oldPassword.setValue("");
+        mViewModel.password.setValue("");
+        mViewModel.repassword.setValue("");
+        mViewModel.phone.setValue("");
     }
 
     private void checkPermission() {
@@ -148,16 +261,6 @@ public class EditProfileFragment extends Fragment {
                         token.continuePermissionRequest();
                     }
                 }).check();
-    }
-
-    private void initData() {
-        mViewModel.email.setValue("");
-        mViewModel.fullname.setValue("");
-        mViewModel.username.setValue("");
-        mViewModel.oldPassword.setValue("");
-        mViewModel.password.setValue("");
-        mViewModel.repassword.setValue("");
-        mViewModel.phone.setValue("");
     }
 
     private void showImagePickerOptions() {
