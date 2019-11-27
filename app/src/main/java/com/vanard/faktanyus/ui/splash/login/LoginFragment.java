@@ -117,12 +117,16 @@ public class LoginFragment extends Fragment {
             public void onCancel() {
                 Log.d(TAG, "onCancel: ");
                 Toast.makeText(requireContext(), "Canceled", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "onError: "+error.getLocalizedMessage());
                 Toast.makeText(requireContext(), error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
             }
         });
     }
@@ -276,6 +280,8 @@ public class LoginFragment extends Fragment {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(requireContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
                         }
 
                         // ...
