@@ -44,6 +44,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
@@ -170,6 +171,7 @@ public class LoginFragment extends Fragment {
 
                                 Log.d(TAG, "onComplete: " + document.getData().get("email"));
 
+                                loginUser(document.getData());
                                 openMain();
 
 
@@ -182,6 +184,13 @@ public class LoginFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void loginUser(Map<String, Object> data) {
+        String email = data.get("email").toString();
+        String password = data.get("password").toString();
+
+        doLogin(email, password);
     }
 
     private void createUser() {
