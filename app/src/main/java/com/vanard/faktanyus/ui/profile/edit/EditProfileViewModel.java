@@ -25,6 +25,7 @@ public class EditProfileViewModel extends ViewModel {
         String repassValue = repassword.getValue();
         String oldPassValue = oldPassword.getValue();
         String phoneValue = phone.getValue();
+        String vertifPass = verificationPassword.getValue();
 
         if (fullnameValue.isEmpty()) return "Full name must not empty";
         if (!(fullnameValue.length() > 2)) return "Full name at least 3 character";
@@ -50,7 +51,8 @@ public class EditProfileViewModel extends ViewModel {
             if (!(repassValue.length() > 5)) return "Re-Password at least 6 character";
             if (!passwordValue.equals(repassValue)) return "Password not match";
             if (!(oldPassValue.length() > 5)) return "Old Password at least 6 character";
-            if (!verificationPassword.equals(oldPassword)) return "Your old password isn't match";
+            if (!vertifPass.equals(oldPassValue)) return "Your old password isn't match";
+            if (passwordValue.equals(oldPassValue)) return "Your new password is same with new password";
 
         }
 

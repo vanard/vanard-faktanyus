@@ -110,6 +110,8 @@ public class LoginFragment extends Fragment {
         binding.loginFacebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                dialog.show();
+
                 checkUserLogin();
             }
 
@@ -198,7 +200,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void createUser() {
-        dialog.show();
         mAuth.createUserWithEmailAndPassword(email, "123456")
                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
