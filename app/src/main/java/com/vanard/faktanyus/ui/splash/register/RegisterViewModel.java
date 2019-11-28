@@ -22,9 +22,11 @@ public class RegisterViewModel extends ViewModel {
         String repassValue = repassword.getValue();
 
         if (fullnameValue.isEmpty()) return "Full name must not empty";
+        if (!(fullnameValue.length() > 2)) return "Password at least 3 character";
         if (emailValue.isEmpty()) return "Email must not empty";
         if (!Patterns.EMAIL_ADDRESS.matcher(emailValue).matches()) return "Email is not valid";
         if (usernameValue.isEmpty()) return "Username must not empty";
+        if (!(usernameValue.length() > 2)) return "Password at least 3 character";
         if (passwordValue.isEmpty()) return "Password must not empty";
         if (!(passwordValue.length() > 5)) return "Password at least 6 character";
         if (repassValue.isEmpty()) return "Re-Password must not empty";

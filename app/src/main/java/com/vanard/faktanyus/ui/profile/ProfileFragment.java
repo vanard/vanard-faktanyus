@@ -14,12 +14,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.squareup.picasso.Picasso;
 import com.vanard.faktanyus.R;
 import com.vanard.faktanyus.databinding.ProfileFragmentBinding;
 import com.vanard.faktanyus.models.auth.User;
@@ -55,22 +56,6 @@ public class  ProfileFragment extends Fragment {
         dialog = new ProgressDialog(requireContext());
         dialog.setMessage("Load profile data...");
 
-        db.collection("users").document(mAuth.getCurrentUser().getUid()).get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    user = task.getResult().toObject(User.class);
-
-                    dialog.dismiss();
-                    setInitData();
-                } else {
-                    Log.d(TAG, "onComplete: "+ task.getException());
-                    dialog.dismiss();
-                }
-            }
-        });
-
         return view;
     }
 
@@ -91,7 +76,7 @@ public class  ProfileFragment extends Fragment {
             binding.phoneProfile.setText("Phone number is not set yet");
 
         if (!user.getProfilePicture().isEmpty())
-            Picasso.get().load(user.getProfilePicture()).centerInside().fit()
+            Glide.with(this).load(user.getProfilePicture()).apply(RequestOptions.circleCropTransform())
                     .placeholder(R.drawable.ic_account_circle_black_24dp).into(binding.profpicProfile);
 
     }
@@ -134,6 +119,27 @@ public class  ProfileFragment extends Fragment {
         super.onResume();
         if (mAuth.getCurrentUser() == null)
             requireActivity().finish();
+        else
+            getData();
+
+    }
+
+    private void getData() {
+        db.collection("users").document(mAuth.getCurrentUser().getUid()).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            user = task.getResult().toObject(User.class);
+
+                            dialog.dismiss();
+                            setInitData();
+                        } else {
+                            Log.d(TAG, "onComplete: "+ task.getException());
+                            dialog.dismiss();
+                        }
+                    }
+                });
     }
 
     private void initData() {

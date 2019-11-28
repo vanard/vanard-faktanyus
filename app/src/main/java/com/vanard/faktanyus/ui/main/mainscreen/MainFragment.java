@@ -18,10 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 import com.vanard.faktanyus.R;
 import com.vanard.faktanyus.databinding.MainFragmentBinding;
 import com.vanard.faktanyus.models.openweather.OpenWeatherResponse;
@@ -110,7 +110,8 @@ public class MainFragment extends Fragment implements PopupMenu.OnMenuItemClickL
     }
 
     private void insertWeather(OpenWeatherResponse response) {
-        Picasso.get().load(OPENWEATHER_IMAGE_URL+response.getWeather().get(0).getIcon()+".png").into(binding.weatherIcon);
+        Glide.with(this).load(OPENWEATHER_IMAGE_URL+response.getWeather().get(0).getIcon()+".png")
+                .into(binding.weatherIcon);
         double d = response.getMain().getTemp();
         String s = Double.toString(d);
 
